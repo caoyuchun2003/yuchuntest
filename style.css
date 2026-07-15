@@ -6,6 +6,12 @@
   --line: rgba(28, 25, 20, 0.14);
   --accent: #2f5d4a;
   --num: #8a7f6b;
+  --card: rgba(255, 253, 248, 0.55);
+  --card-hover: rgba(255, 253, 248, 0.8);
+  --glow: rgba(47, 93, 74, 0.1);
+  --glow-warm: rgba(180, 150, 90, 0.1);
+  --shadow-soft: rgba(28, 25, 20, 0.1);
+  --shadow-lift: rgba(28, 25, 20, 0.18);
   --font-sans: 'Noto Sans SC', system-ui, sans-serif;
   --font-serif: 'Noto Serif SC', 'Songti SC', serif;
   --font-display: 'Instrument Serif', 'Noto Serif SC', Georgia, serif;
@@ -30,9 +36,100 @@ body {
   line-height: 1.55;
 }
 
+/* —— 流动光晕背景 —— */
+.aura {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.blob-a {
+  width: 46vmax;
+  height: 46vmax;
+  left: -8vmax;
+  top: -10vmax;
+  background: radial-gradient(circle at 50% 50%, var(--glow) 0%, transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.blob-b {
+  width: 40vmax;
+  height: 40vmax;
+  right: -10vmax;
+  top: 20vmax;
+  background: radial-gradient(circle at 50% 50%, var(--glow-warm) 0%, transparent 65%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+.blob-c {
+  width: 34vmax;
+  height: 34vmax;
+  left: 20vmax;
+  bottom: -14vmax;
+  background: radial-gradient(circle at 50% 50%, var(--glow) 0%, transparent 60%);
+  animation: drift-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.12);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(-5vmax, -3vmax, 0) scale(0.95);
+  }
+}
+
+@keyframes drift-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4vmax, -5vmax, 0) scale(1.1);
+  }
+}
+
+/* —— 光标聚光 —— */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 40%),
+    var(--glow-warm) 0%,
+    transparent 60%
+  );
+}
+
+.js .spotlight {
+  opacity: 1;
+}
+
 .paper {
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 28%),
@@ -79,14 +176,18 @@ body {
   }
 }
 
-@keyframes rise {
+/* —— 分层渐显 ——
+   仅写 from 关键帧 + backwards 填充：动画结束后回归自然样式，
+   不会用填充值钉住 transform（否则 JS 倾斜会失效）。 */
+.reveal {
+  animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes reveal {
   from {
     opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(16px);
   }
 }
 
@@ -101,7 +202,6 @@ body {
 
 .masthead {
   margin-bottom: clamp(2.5rem, 8vh, 4rem);
-  animation: rise 0.75s ease-out both;
 }
 
 .name {
@@ -122,40 +222,74 @@ body {
   font-weight: 400;
 }
 
+/* —— 卡片入口 —— */
 .toc {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--line);
-  animation: rise 0.85s ease-out 0.12s both;
+  gap: 0.9rem;
+  perspective: 900px;
 }
 
 .entry {
+  position: relative;
   display: grid;
   grid-template-columns: 2.75rem 1fr auto;
   gap: 0.85rem 1.1rem;
-  align-items: baseline;
-  padding: 1.35rem 0.15rem 1.35rem 0;
-  border-bottom: 1px solid var(--line);
+  align-items: center;
+  padding: 1.25rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
   color: inherit;
   text-decoration: none;
-  transition: background 0.18s ease, padding-left 0.18s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 1px 2px var(--shadow-soft);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.25s ease;
 }
 
-.entry:hover {
-  padding-left: 0.35rem;
-  background: linear-gradient(
-    90deg,
-    rgba(47, 93, 74, 0.06),
-    transparent 70%
+.entry::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    180px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.28),
+    transparent 55%
   );
 }
 
-.entry:hover .title {
+.js .entry:hover::before {
+  opacity: 1;
+}
+
+.entry:hover,
+.entry:focus-visible {
+  background: var(--card-hover);
+  box-shadow:
+    0 10px 30px -12px var(--shadow-lift),
+    0 2px 6px -2px var(--shadow-soft);
+}
+
+.entry:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.entry:hover .title,
+.entry:focus-visible .title {
   color: var(--accent);
 }
 
-.entry:hover .go {
-  transform: translateX(4px);
+.entry:hover .go,
+.entry:focus-visible .go {
+  transform: translateX(4px) translateZ(22px);
   opacity: 1;
 }
 
@@ -165,6 +299,7 @@ body {
   font-style: italic;
   color: var(--num);
   letter-spacing: 0.02em;
+  transform: translateZ(18px);
 }
 
 .body {
@@ -172,6 +307,7 @@ body {
   flex-direction: column;
   gap: 0.28rem;
   min-width: 0;
+  transform: translateZ(12px);
 }
 
 .title {
@@ -193,6 +329,7 @@ body {
   font-size: 1.35rem;
   color: var(--accent);
   opacity: 0.45;
+  transform: translateZ(22px);
   transition:
     transform 0.18s ease,
     opacity 0.18s ease;
@@ -201,7 +338,6 @@ body {
 .colophon {
   margin-top: 2.75rem;
   padding-top: 0;
-  animation: rise 0.9s ease-out 0.22s both;
 }
 
 .colophon p {
@@ -226,21 +362,63 @@ body {
 
   .entry {
     grid-template-columns: 2.2rem 1fr auto;
-    gap: 0.65rem 0.75rem;
+    gap: 0.6rem 0.75rem;
+    padding: 1.1rem 0.95rem;
+  }
+
+  .blob {
+    filter: blur(48px);
+  }
+
+  .spotlight {
+    display: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .spotlight {
+    display: none;
+  }
+
+  .entry::before {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .paper,
   .rule-v,
+  .aura,
+  .blob,
+  .spotlight,
   .hub,
   .masthead,
   .toc,
   .colophon,
+  .colophon p,
+  .name,
+  .lede,
+  .reveal,
   .entry,
   .go,
   .title {
     animation: none !important;
     transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .spotlight {
+    opacity: 0 !important;
+  }
+
+  .entry,
+  .entry .num,
+  .entry .body,
+  .entry .go {
+    transform: none !important;
   }
 }
