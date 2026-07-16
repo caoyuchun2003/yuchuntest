@@ -1,9 +1,10 @@
 # yuchuntest.com
 
-曹宇春个人入口站：串起三个独立子站。
+曹宇春个人入口站：串起四个独立子站。
 
 - https://yuchuntest.com/
 - Learn → https://learn.yuchuntest.com/
+- AI 学习平台 → https://ai.yuchuntest.com/
 - 阅读课 → https://reading.yuchuntest.com/
 - 金句 → https://one.yuchuntest.com/
 
