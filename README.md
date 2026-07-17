@@ -1,6 +1,8 @@
 # yuchuntest.com
 
-曹宇春个人入口站：串起各独立子站。
+曹宇春个人主页:独立开发者接单页 + 各子站入口。
+
+页面结构:定位与联系方式 → 服务范围 → 8 个已上线项目案例(类型标签 + 技术栈)→ 合作流程 → 联系。
 
 - https://yuchuntest.com/
 - Learn → https://learn.yuchuntest.com/

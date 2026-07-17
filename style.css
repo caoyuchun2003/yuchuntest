@@ -204,6 +204,15 @@ body {
   margin-bottom: clamp(2.5rem, 8vh, 4rem);
 }
 
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 .name {
   margin: 0 0 0.75rem;
   font-family: var(--font-display);
@@ -216,10 +225,97 @@ body {
 
 .lede {
   margin: 0;
-  max-width: 22rem;
+  max-width: 30rem;
   font-size: 1.05rem;
   color: var(--muted);
   font-weight: 400;
+}
+
+/* —— CTA 按钮 —— */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.62rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 1px 2px var(--shadow-soft);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px -8px var(--shadow-lift);
+  background: var(--card-hover);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #f5f2ea;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: #26503f;
+}
+
+/* —— 分节 —— */
+.section {
+  margin-bottom: clamp(2.5rem, 7vh, 3.75rem);
+}
+
+.section-title {
+  margin: 0 0 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+/* —— 服务范围 —— */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.skill-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 /* —— 卡片入口 —— */
@@ -324,6 +420,101 @@ body {
   line-height: 1.45;
 }
 
+/* —— 类型标签 —— */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--muted);
+  background: rgba(255, 253, 248, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.tag-ai {
+  color: var(--accent);
+  border-color: rgba(47, 93, 74, 0.35);
+  background: rgba(47, 93, 74, 0.08);
+}
+
+.tag-content {
+  color: #8a6a2f;
+  border-color: rgba(180, 150, 90, 0.4);
+  background: rgba(180, 150, 90, 0.1);
+}
+
+.stack {
+  font-size: 0.78rem;
+  color: var(--num);
+  letter-spacing: 0.01em;
+}
+
+/* —— 合作流程 —— */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.step-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.step-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* —— 联系 —— */
+.contact-line {
+  font-size: 1rem !important;
+  color: var(--ink) !important;
+}
+
+.contact-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(47, 93, 74, 0.35);
+  transition: border-color 0.2s ease;
+}
+
+.contact-link:hover,
+.contact-link:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
 .go {
   font-family: var(--font-display);
   font-size: 1.35rem;
@@ -364,6 +555,19 @@ body {
     grid-template-columns: 2.2rem 1fr auto;
     gap: 0.6rem 0.75rem;
     padding: 1.1rem 0.95rem;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta-row .btn {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
   .blob {
