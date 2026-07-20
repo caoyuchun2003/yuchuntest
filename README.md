@@ -10,6 +10,7 @@
 - AI 聊天 → https://chat.yuchuntest.com/
 - AI Agent → https://agent.yuchuntest.com/
 - 视频创作 → https://video.yuchuntest.com/
+- 邻里小店 → https://shop.yuchuntest.com/
 - 阅读课 → https://reading.yuchuntest.com/
 - 金句 → https://one.yuchuntest.com/
 - 宇春书城 → https://libbook.yuchuntest.com/
