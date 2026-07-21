@@ -290,6 +290,21 @@ body {
   letter-spacing: 0.01em;
 }
 
+.section-sub {
+  margin: 2rem 0 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.section-note {
+  margin: 0 0 0.85rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 /* —— 服务范围 —— */
 .skills {
   display: grid;
@@ -324,6 +339,31 @@ body {
   flex-direction: column;
   gap: 0.9rem;
   perspective: 900px;
+}
+
+.toc-other {
+  gap: 0.55rem;
+}
+
+.entry-compact {
+  grid-template-columns: 1fr auto;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.entry-compact .title {
+  font-size: 0.95rem;
+}
+
+.entry-compact .desc {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+}
+
+.entry-compact .go {
+  font-size: 1rem;
+  opacity: 0.55;
 }
 
 .entry {
@@ -449,6 +489,12 @@ body {
   color: #8a6a2f;
   border-color: rgba(180, 150, 90, 0.4);
   background: rgba(180, 150, 90, 0.1);
+}
+
+.tag-soon {
+  color: #9c4f2e;
+  border-color: rgba(200, 110, 60, 0.4);
+  background: rgba(200, 110, 60, 0.08);
 }
 
 .stack {
