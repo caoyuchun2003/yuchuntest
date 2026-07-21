@@ -345,38 +345,6 @@ body {
   gap: 0.55rem;
 }
 
-.entry-compact {
-  grid-template-columns: 1fr auto;
-  padding: 0.85rem 1rem;
-  border-radius: 10px;
-  box-shadow: none;
-}
-
-.entry-compact .body {
-  min-width: 0;
-}
-
-.entry-compact .title {
-  font-size: 0.98rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.entry-compact .desc {
-  margin-top: 0.15rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.entry-compact .go {
-  font-size: 1rem;
-  opacity: 0.55;
-  flex-shrink: 0;
-}
-
 .entry {
   position: relative;
   display: grid;
@@ -395,6 +363,42 @@ body {
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.25s ease;
+}
+
+/* 其它：flex 横排，避免继承主列表三列 grid */
+.toc-other .entry.entry-compact {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  grid-template-columns: none;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.toc-other .entry-compact .body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.toc-other .entry-compact .title {
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.toc-other .entry-compact .desc {
+  margin-top: 0.12rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.toc-other .entry-compact .go {
+  flex: 0 0 auto;
+  font-size: 1.05rem;
+  opacity: 0.55;
+  margin-left: auto;
 }
 
 .entry::before {
@@ -614,8 +618,9 @@ body {
     padding: 1.1rem 0.95rem;
   }
 
-  .entry-compact {
-    grid-template-columns: 1fr auto;
+  .toc-other .entry.entry-compact {
+    display: flex;
+    grid-template-columns: none;
     padding: 0.85rem 1rem;
   }
 
