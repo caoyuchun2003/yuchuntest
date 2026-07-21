@@ -352,18 +352,29 @@ body {
   box-shadow: none;
 }
 
+.entry-compact .body {
+  min-width: 0;
+}
+
 .entry-compact .title {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .entry-compact .desc {
   margin-top: 0.15rem;
   font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .entry-compact .go {
   font-size: 1rem;
   opacity: 0.55;
+  flex-shrink: 0;
 }
 
 .entry {
@@ -601,6 +612,11 @@ body {
     grid-template-columns: 2.2rem 1fr auto;
     gap: 0.6rem 0.75rem;
     padding: 1.1rem 0.95rem;
+  }
+
+  .entry-compact {
+    grid-template-columns: 1fr auto;
+    padding: 0.85rem 1rem;
   }
 
   .skills {
