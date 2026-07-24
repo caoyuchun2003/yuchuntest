@@ -365,6 +365,39 @@ body {
     background 0.25s ease;
 }
 
+/* 带预览截图的主力案例:文案左、缩略右 */
+.entry.entry-shot {
+  grid-template-columns: 2.75rem minmax(0, 1fr) minmax(9.5rem, 11.5rem) auto;
+  align-items: center;
+}
+
+.entry .thumb {
+  position: relative;
+  display: block;
+  align-self: center;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(15, 20, 35, 0.35);
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 4px 14px -8px var(--shadow-lift);
+  transform: translateZ(8px);
+}
+
+.entry .thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.entry:hover .thumb img,
+.entry:focus-visible .thumb img {
+  transform: scale(1.04);
+}
+
 /* 其它：flex 横排，避免继承主列表三列 grid */
 .toc-other .entry.entry-compact {
   display: flex;
@@ -616,6 +649,24 @@ body {
     grid-template-columns: 2.2rem 1fr auto;
     gap: 0.6rem 0.75rem;
     padding: 1.1rem 0.95rem;
+  }
+
+  .entry.entry-shot {
+    grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+  }
+
+  .entry.entry-shot .thumb {
+    grid-column: 2 / 3;
+    grid-row: 2;
+    max-width: 100%;
+    margin-top: 0.15rem;
+  }
+
+  .entry.entry-shot .go {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
   }
 
   .toc-other .entry.entry-compact {
