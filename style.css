@@ -365,23 +365,47 @@ body {
     background 0.25s ease;
 }
 
-/* 带预览截图的主力案例:文案左、缩略右 */
+/* 通栏预览在上,文案在下 — 图够大才看得见 */
 .entry.entry-shot {
-  grid-template-columns: 2.75rem minmax(0, 1fr) minmax(9.5rem, 11.5rem) auto;
+  grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
   align-items: center;
+  gap: 0.85rem 1.1rem;
+  padding: 0.7rem 0.7rem 1.15rem;
+}
+
+.entry.entry-shot .thumb {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: stretch;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #0c1220;
+  aspect-ratio: 2.2 / 1;
+  max-height: 220px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transform: translateZ(6px);
+}
+
+.entry.entry-shot .thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 28%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(8, 12, 22, 0.35), transparent);
+}
+
+.entry.entry-shot .num,
+.entry.entry-shot .body,
+.entry.entry-shot .go {
+  grid-row: 2;
 }
 
 .entry .thumb {
   position: relative;
   display: block;
-  align-self: center;
-  overflow: hidden;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: rgba(15, 20, 35, 0.35);
-  aspect-ratio: 16 / 10;
-  box-shadow: 0 4px 14px -8px var(--shadow-lift);
-  transform: translateZ(8px);
 }
 
 .entry .thumb img {
@@ -393,9 +417,32 @@ body {
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* 深色稀疏界面:裁到中间主操作区,避免缩略时整块发黑 */
+.entry.entry-shot[href*="video."] .thumb img {
+  object-position: center 38%;
+}
+
+/* 邻里小店偏竖屏界面:完整露出,不强裁切 */
+.entry.entry-shot-mobile .thumb {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(90, 120, 200, 0.18), transparent 55%),
+    #10182a;
+}
+
+.entry.entry-shot-mobile .thumb img {
+  object-fit: contain;
+  object-position: center;
+  transform-origin: center;
+}
+
 .entry:hover .thumb img,
 .entry:focus-visible .thumb img {
-  transform: scale(1.04);
+  transform: scale(1.03);
+}
+
+.entry.entry-shot-mobile:hover .thumb img,
+.entry.entry-shot-mobile:focus-visible .thumb img {
+  transform: scale(1.02);
 }
 
 /* 其它：flex 横排，避免继承主列表三列 grid */
@@ -654,19 +701,21 @@ body {
   .entry.entry-shot {
     grid-template-columns: 2.2rem minmax(0, 1fr) auto;
     grid-template-rows: auto auto;
+    padding: 0.55rem 0.55rem 1rem;
+    gap: 0.7rem 0.75rem;
   }
 
   .entry.entry-shot .thumb {
-    grid-column: 2 / 3;
-    grid-row: 2;
-    max-width: 100%;
-    margin-top: 0.15rem;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    aspect-ratio: 1.85 / 1;
+    max-height: 168px;
   }
 
+  .entry.entry-shot .num,
+  .entry.entry-shot .body,
   .entry.entry-shot .go {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    align-self: center;
+    grid-row: 2;
   }
 
   .toc-other .entry.entry-compact {
